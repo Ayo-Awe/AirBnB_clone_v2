@@ -3,14 +3,8 @@
 import cmd
 import sys
 import re
-from models.base_model import BaseModel
-from models.__init__ import storage
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
+from models import storage
+import models
 
 
 class HBNBCommand(cmd.Cmd):
@@ -18,12 +12,6 @@ class HBNBCommand(cmd.Cmd):
 
     # determines prompt for interactive/non-interactive modes
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
-
-    classes = {
-        'BaseModel': BaseModel, 'User': User, 'Place': Place,
-        'State': State, 'City': City, 'Amenity': Amenity,
-        'Review': Review
-    }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
         'number_rooms': int, 'number_bathrooms': int,
@@ -31,10 +19,10 @@ class HBNBCommand(cmd.Cmd):
         'latitude': float, 'longitude': float
     }
 
-    # <type>: <regex match>
     # str: <key>="<value>"
     # int: <key>=<digit>
     # float: <key>=<digit>.<decimal>
+    # (<regex match>, type)
     param_types = {
         "str": (r'\w+="[^\s]+"(?=\s|$)', str),
         "int": (r'\w+=[\+-]?\d+(?=\s|$)', int),
@@ -153,18 +141,19 @@ class HBNBCommand(cmd.Cmd):
         # partition args: (<class name>, <delim>, <params>)
         cls, _, params = args.partition(" ")
 
-        if cls not in HBNBCommand.classes:
+        if cls not in models.classes:
             print("** class doesn't exist **")
             return
 
-        new_instance = HBNBCommand.classes[cls]()
+        new_instance = models.classes[cls]()
 
         # Parse params
         params = self.extract_params(params)
 
         # Update new instance with params
         new_instance.__dict__.update(params)
-        storage.save()
+
+        new_instance.save()
         print(new_instance.id)
 
     def help_create(self):
@@ -186,7 +175,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if c_name not in HBNBCommand.classes:
+        if c_name not in models.classes:
             print("** class doesn't exist **")
             return
 
@@ -207,9 +196,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, args):
         """ Destroys a specified object """
-        new = args.partition(" ")
-        c_name = new[0]
-        c_id = new[2]
+        c_name, _, c_id = args.partition(" ")
+
         if c_id and ' ' in c_id:
             c_id = c_id.partition(' ')[0]
 
@@ -217,7 +205,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if c_name not in HBNBCommand.classes:
+        if c_name not in models.classes:
             print("** class doesn't exist **")
             return
 
@@ -243,15 +231,15 @@ class HBNBCommand(cmd.Cmd):
         print_list = []
 
         if args:
-            args = args.split(' ')[0]  # remove possible trailing args
-            if args not in HBNBCommand.classes:
+            cls = args.split(' ')[0]  # remove possible trailing args
+            if cls not in models.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+
+            for v in storage.all(models.classes[cls]).values():
+                print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for v in storage.all().values():
                 print_list.append(str(v))
 
         print(print_list)
@@ -264,7 +252,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """Count current number of class instances"""
         count = 0
-        for k, v in storage._FileStorage__objects.items():
+        for k, v in storage.all().items():
             if args == k.split('.')[0]:
                 count += 1
         print(count)
@@ -284,7 +272,7 @@ class HBNBCommand(cmd.Cmd):
         else:  # class name not present
             print("** class name missing **")
             return
-        if c_name not in HBNBCommand.classes:  # class name invalid
+        if c_name not in models.classes:  # class name invalid
             print("** class doesn't exist **")
             return
 
