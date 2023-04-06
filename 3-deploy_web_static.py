@@ -4,7 +4,7 @@ content from the packaging of files to
 deployment on the server
 """
 from datetime import datetime
-from fabric.api import local, sudo, env, put, runs_once
+from fabric.api import local, run, env, put, runs_once
 import os
 
 
@@ -41,13 +41,13 @@ def do_deploy(archive_path):
 
     temp_archive, = put(local_path=archive_path, remote_path="/tmp")
     folder_name = "/data/web_static/releases/{}".format(archive_name)
-    r1 = sudo("mkdir -p {}".format(folder_name))
-    r2 = sudo("tar -xzf {} -C {}".format(temp_archive, folder_name))
-    r6 = sudo("rm {}".format(temp_archive))
-    r3 = sudo("mv {}/web_static/* {}".format(folder_name, folder_name))
-    r4 = sudo("rm -rf {}/web_static".format(folder_name))
-    r5 = sudo("rm -r  /data/web_static/current".format(folder_name))
-    r7 = sudo("ln -s {} /data/web_static/current".format(folder_name))
+    r1 = run("mkdir -p {}".format(folder_name))
+    r2 = run("tar -xzf {} -C {}".format(temp_archive, folder_name))
+    r6 = run("rm {}".format(temp_archive))
+    r3 = run("mv {}/web_static/* {}".format(folder_name, folder_name))
+    r4 = run("rm -rf {}/web_static".format(folder_name))
+    r5 = run("rm -r  /data/web_static/current".format(folder_name))
+    r7 = run("ln -s {} /data/web_static/current".format(folder_name))
 
     if r1.failed and r2.failed and r3.failed and r4.failed and r5.failed \
             and r6.failed and r7.failed:
