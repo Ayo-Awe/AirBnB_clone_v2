@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Generate a .tgz archive from the
-contents of the web_static folder
+contents of the web_static folder and
+store it in the versions folder
 """
 from fabric.api import *
 from datetime import datetime
