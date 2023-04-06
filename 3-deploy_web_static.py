@@ -4,7 +4,7 @@ content from the packaging of files to
 deployment on the server
 """
 from datetime import datetime
-from fabric.api import local, sudo, env, put
+from fabric.api import local, sudo, env, put, runs_once
 import os
 
 
@@ -13,6 +13,7 @@ env.user = "ubuntu"
 env.key_filename = "~/.ssh/id_rsa"
 
 
+@runs_once
 def do_pack():
     """This function generates a .tgz archive from the
     contents of the web_static folder and stores it in

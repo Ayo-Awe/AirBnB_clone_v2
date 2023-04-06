@@ -5,13 +5,14 @@ and configures the new release on the server
 """
 from datetime import datetime
 import os
-from fabric.api import env, put, sudo, local
+from fabric.api import env, put, sudo, local, runs_once
 
 env.hosts = ["54.234.93.141", "34.207.154.98"]
 env.user = "ubuntu"
 env.key_filename = "~/.ssh/id_rsa"
 
 
+@runs_once
 def do_pack():
     """This function generates a .tgz archive from the
     contents of the web_static folder and stores it in
