@@ -23,7 +23,7 @@ echo "server {
         index index.html index.htm index.nginx-debian.html;
 
         server_name _;
-        add_header X-Served-By \$hostname always;
+        add_header X-Served-By \$hostname;
 
         error_page 404 /404.html;
         location /404.html {
