@@ -12,8 +12,7 @@ echo "<html>
     Holberton School
   </body>
 </html>" > /data/web_static/releases/test/index.html
-rm -f /data/web_static/current
-ln -s /data/web_static/releases/test/ /data/web_static/current
+ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown ubuntu:ubuntu -R /data/
 newlines="server_name _;\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}"
 sed -i "s~server_name _;~$newlines~" /etc/nginx/sites-enabled/default
