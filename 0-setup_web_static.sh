@@ -14,6 +14,32 @@ echo "<html>
 </html>" > /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown ubuntu:ubuntu -R /data/
-newlines="server_name _;\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}"
-sed -i "s~server_name _;~$newlines~" /etc/nginx/sites-enabled/default
+echo "server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+        add_header X-Served-By \$hostname always;
+
+        error_page 404 /404.html;
+        location /404.html {
+                 root /usr/share/nginx/html;
+        }
+
+        location /redirect_me {
+                return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+        }
+
+        location /hbnb_static/ {
+                                alias /data/web_static/current/;
+        }
+
+        location / {
+                try_files \$uri \$uri/ =404;
+        }
+}" > /etc/nginx/sites-enabled/default
 service nginx restart
