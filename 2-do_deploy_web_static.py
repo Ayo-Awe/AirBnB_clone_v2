@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/python3
 """Deploy new archive releases
 to web servers. Uploads the new archive
 and configures the new release on the server
