@@ -6,16 +6,16 @@ and configures the new release on the server
 import os
 from fabric.api import env, put, sudo
 
+env.hosts = ["54.234.93.141", "34.207.154.98"]
+env.user = "ubuntu"
+env.key_filename = "~/.ssh/id_rsa"
+
 
 def do_deploy(archive_path):
     """Deploy new archive releases
         to web servers and configure the
         web servers for the new release
     """
-    env.hosts = ["54.234.93.141", "34.207.154.98"]
-    env.user = "ubuntu"
-    env.key_filename = "~/.ssh/id_rsa"
-
     archive_name = os.path.basename(archive_path).split(".")[0]
     if not os.path.exists(archive_path):
         return False
