@@ -7,8 +7,9 @@ from datetime import datetime
 
 
 def do_pack():
-    """Generate a .tgz archive from the
-    contents of the web_static folder
+    """This function generates a .tgz archive from the
+    contents of the web_static folder and stores it in
+    the version folder
     """
     date_format = datetime.now().strftime("%Y%m%d%H%M%S")
     file_path = f"versions/web_static_{date_format}.tgz"
