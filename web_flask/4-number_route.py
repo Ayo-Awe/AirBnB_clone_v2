@@ -15,7 +15,7 @@ def serve_root():
     return "Hello HBNB!"
 
 
-@app.get("/hbnb", strict_slashes=False)
+@app.route("/hbnb", strict_slashes=False)
 def hbnb():
     """Route handler for web hbnb endpoint
     it responds with 'HBNB!'
@@ -23,7 +23,7 @@ def hbnb():
     return "HBNB"
 
 
-@app.get("/c/<text>", strict_slashes=False)
+@app.route("/c/<text>", strict_slashes=False)
 def c_handler(text):
     """Route handler for c endpoint. It responds
     with some text from the route parameters
@@ -31,8 +31,8 @@ def c_handler(text):
     return "C {}".format(escape(text.replace("_", " ")))
 
 
-@app.get("/python", strict_slashes=False)
-@app.get("/python/<text>", strict_slashes=False)
+@app.route("/python", strict_slashes=False)
+@app.route("/python/<text>", strict_slashes=False)
 def python_handler(text="is_cool"):
     """Route handler for python endpoint,
     it responds with some python text concatinated
@@ -41,7 +41,7 @@ def python_handler(text="is_cool"):
     return "Python {}".format(escape(text.replace("_", " ")))
 
 
-@app.get("/number/<int:n>", strict_slashes=False)
+@app.route("/number/<int:n>", strict_slashes=False)
 def number_handler(n):
     """Route handler for number endpoint. The route parameter n
     only matches integers
