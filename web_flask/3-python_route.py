@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """This module contains a simple flask
 server application. The flask server
-listens on PORT 5000 of 0.0.0.0
+listens on PORT 5000 of 0.0.0.0.
 """
 from flask import Flask, escape
 app = Flask(__name__)
 
 
-@app.get("/", strict_slashes=False)
+@app.route("/", strict_slashes=False)
 def serve_root():
     """Route handler for web server root
     it responds with 'Hello HBNB!'

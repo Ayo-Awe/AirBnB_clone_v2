@@ -15,7 +15,7 @@ def serve_root():
     return "Hello HBNB!"
 
 
-@app.get("/hbnb", strict_slashes=False)
+@app.route("/hbnb", strict_slashes=False)
 def hbnb():
     """Route handler for web hbnb endpoint
     it responds with 'HBNB!'
