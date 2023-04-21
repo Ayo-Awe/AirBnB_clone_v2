@@ -9,6 +9,7 @@ app = Flask(__name__)
 @app.get("/", strict_slashes=False)
 def root():
     """Route handler for web server root
+    it responsds with 'Hello HBNB'
     """
     return "Hello HBNB!"
 
