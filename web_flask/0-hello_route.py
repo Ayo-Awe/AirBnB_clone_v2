@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 @app.get("/", strict_slashes=False)
-def root():
+def serve_root():
     """Route handler for web server root
     it responds with 'Hello HBNB!'
     """
