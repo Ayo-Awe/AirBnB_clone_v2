@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """This module contains a simple flask
 server application
+This script starts a flask application that listens
+on PORT 5000
 """
 from flask import Flask
 app = Flask(__name__)
@@ -9,7 +11,7 @@ app = Flask(__name__)
 @app.get("/", strict_slashes=False)
 def root():
     """Route handler for web server root
-    it responsds with 'Hello HBNB'
+    it responds with 'Hello HBNB!'
     """
     return "Hello HBNB!"
 
