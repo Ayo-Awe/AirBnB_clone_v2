@@ -1,22 +1,24 @@
 #!/usr/bin/python3
 """This module contains a simple flask
-server application
+server application. The flask server
+listens on PORT 5000 of 0.0.0.0. Enjoy!!!
 """
 from flask import Flask
 app = Flask(__name__)
 
 
 @app.get("/", strict_slashes=False)
-def root():
-    """Route handler for root of
-    web server
+def serve_root():
+    """Route handler for web server root
+    it responds with 'Hello HBNB!'
     """
     return "Hello HBNB!"
 
 
 @app.get("/hbnb", strict_slashes=False)
 def hbnb():
-    """Route handler for /hbnb endpoint
+    """Route handler for web hbnb endpoint
+    it responds with 'HBNB!'
     """
     return "HBNB"
 
