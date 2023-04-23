@@ -32,8 +32,9 @@ def serve_states():
     This endpoint serves data from the storage engine
     and renders it using jinja
     """
-    states = storage.all(models.classes["State"])
-    return render_template("7-states_list.html", states=list(states.values()))
+    states = list(storage.all(models.classes["State"]).values())
+    states = sorted(states, key= lambda x: x.name)
+    return render_template("7-states_list.html", states=states)
 
 
 if __name__ == "__main__":
