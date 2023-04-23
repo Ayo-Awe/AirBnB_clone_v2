@@ -2,7 +2,11 @@
 """This module contains a simple flask
 server application. The flask server
 listens on PORT 5000, 0.0.0.0
+
+This server servers data from the storage engine
+and renders it using jinja
 """
+
 from flask import Flask, escape, render_template
 from models import storage
 import models
