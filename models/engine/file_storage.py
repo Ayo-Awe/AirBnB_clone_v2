@@ -66,3 +66,8 @@ class FileStorage:
 
         key = f'{obj.__class__.__name__}.{obj.id}'
         del __class__.__objects[key]
+
+    def close(self):
+        """Close file storage session
+        """
+        self.reload()

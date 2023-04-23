@@ -79,3 +79,8 @@ class DBStorage:
         if obj is not None:
             session = __class__.__session()
             session.delete(obj)
+
+    def close(self):
+        """Close database connection and end current session
+        """
+        self.__session.remove()
