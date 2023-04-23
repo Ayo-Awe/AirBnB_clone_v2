@@ -22,7 +22,7 @@ class FileStorage:
     def new(self, obj):
         """Adds new object to storage dictionary"""
         __class__.__objects.update(
-            {f'{obj.__class__.__name__}.{obj.id}': obj})
+            {'{}.{}'.format(obj.__class__.__name__, obj.id): obj})
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -64,7 +64,7 @@ class FileStorage:
         if obj is None:
             return
 
-        key = f'{obj.__class__.__name__}.{obj.id}'
+        key = '{}.{}'.format(obj.__class__.__name__, obj.id)
         del __class__.__objects[key]
 
     def close(self):
