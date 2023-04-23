@@ -4,7 +4,8 @@ server application. The flask server
 listens on PORT 5000, 0.0.0.0
 """
 from flask import Flask, escape, render_template
-from models import storage, classes
+from models import storage
+import models
 app = Flask(__name__)
 
 
@@ -21,7 +22,7 @@ def serve_states():
     """Route handler for states endpoint
     it responds with html template
     """
-    states = storage.all(classes["State"])
+    states = storage.all(models.classes["State"])
     return render_template("7-states_list.html", states=list(states.values()))
 
 
