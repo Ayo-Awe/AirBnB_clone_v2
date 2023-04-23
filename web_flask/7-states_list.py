@@ -3,7 +3,7 @@
 server application. The flask server
 listens on PORT 5000, 0.0.0.0
 
-This server servers data from the storage engine
+This server serves data from the storage engine
 and renders it using jinja
 """
 
@@ -17,6 +17,9 @@ app = Flask(__name__)
 def teardown(c):
     """Teardown function is called after each
     request
+
+    This function is called after every request
+    and it closes the current storage session
     """
     storage.close()
 
@@ -25,6 +28,9 @@ def teardown(c):
 def serve_states():
     """Route handler for states endpoint
     it responds with html template
+
+    This endpoint serves data from the storage engine
+    and renders it using jinja
     """
     states = storage.all(models.classes["State"])
     return render_template("7-states_list.html", states=list(states.values()))
