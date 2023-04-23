@@ -33,7 +33,7 @@ def serve_states():
     and renders it using jinja
     """
     states = list(storage.all(models.classes["State"]).values())
-    states = sorted(states, key= lambda x: x.name)
+    states = sorted(states, key=lambda x: x.name)
     return render_template("7-states_list.html", states=states)
 
 
