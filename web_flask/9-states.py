@@ -35,8 +35,6 @@ def serve_single_state(id):
 
     state = storage.all(models.classes["State"]).get("State.{}".format(id))
 
-    print(state)
-
     if state is not None:
         state.cities.sort(key=lambda x: x.name)
 
